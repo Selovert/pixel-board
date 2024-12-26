@@ -6,7 +6,7 @@ import logging
 from PIL import Image, ImageDraw, ImageFont
 from traceback import format_exception
 
-sys.path.append("rpi-rgb-led-matrix/bindings/python")
+sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/rpi-rgb-led-matrix/bindings/python")
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 # from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 
