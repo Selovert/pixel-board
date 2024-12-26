@@ -1,0 +1,21 @@
+[project]
+name = "pixel-board"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Tassilo Selover-Stephan", email = "tassilo@selover.net"},
+]
+dependencies = ["pillow>=11.0.0", "requests>=2.32.3"]
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[dependency-groups]
+test = [
+    "RGBMatrixEmulator>=0.11.6",
+    "libsixel-python>=0.5.0",
+]
