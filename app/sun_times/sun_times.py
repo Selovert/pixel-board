@@ -88,7 +88,7 @@ class SunDisplayer():
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
         day_arc = self.todayData.day_length / (24*60*60) * 360
         day_arc_offset = (180-day_arc)/2
-        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#57b9fa', width=2)
+        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2)
         draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=2)
 
     def _drawSun(self, draw: ImageDraw.ImageDraw):
