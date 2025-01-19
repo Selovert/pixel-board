@@ -49,7 +49,6 @@ class MatrixBoard():
         options.parallel = 1
         options.hardware_mapping = 'adafruit-hat-pwm'  # If you have an Adafruit HAT: 'adafruit-hat'
         options.led_rgb_sequence = "RBG"
-        # options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
         options.gpio_slowdown = 3
         # options.pwm_lsb_nanoseconds = 130
         options.limit_refresh_rate_hz = 160
@@ -93,7 +92,6 @@ class MatrixBoard():
 
 
             self.canvas.Clear() # clear whatever's on the screen
-            if self.debug: self.image.convert('RGB').sa
             self.canvas.SetImage(self.image.convert('RGB'), 0, 0) # transfer the PIL image to the canvas
 
             self.i += 1 # increment the number of iterations run
