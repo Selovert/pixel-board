@@ -94,9 +94,9 @@ class SunDisplayer():
         day_arc_offset = (180-day_arc)/2
         light_arc = self.todayData.light_length  / (24*60*60) * 360
         light_arc_offset = (180-light_arc)/2
-        draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=2)
-        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#0c5d94', width=2)
-        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2)
+        draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=2) # night arc
+        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#07446e', width=2) # light arc
+        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2) # day arc
 
     def _drawSun(self, draw: ImageDraw.ImageDraw):
         midnight = self.today.replace(hour=0, minute=0, second=0, microsecond=0)
