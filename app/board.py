@@ -85,7 +85,7 @@ class MatrixBoard():
             # -- reload sunData when the day changes --
             if self.displayer.todayData.date.day != self.displayer.today.day:
                 self.displayer.reloadData()
-            self.displayer.showSun = False if int(self.runTime) % 2 == 0 else True
+            self.displayer.showSun = False if int(self.runTime*1.5) % 2 == 0 else True
 
             sunImage = self.displayer.generateImage()
             self.image.paste(sunImage, (0,0))
