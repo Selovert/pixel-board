@@ -68,7 +68,7 @@ class MatrixBoard():
 
     def run(self):
         self.startTime = datetime.datetime.now()
-        self.displayer = SunDisplayer(45.428097, -122.681340)
+        self.displayer = SunDisplayer(34.110856, -118.272459)
         self.lastTodayUpdate: float = 0.0
 
         self.canvas = self.matrix.CreateFrameCanvas()
