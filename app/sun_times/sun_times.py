@@ -1,5 +1,6 @@
 from typing import Dict, Tuple
 from dataclasses import dataclass
+from pathlib import Path
 from datetime import datetime, timedelta
 import math
 
@@ -21,7 +22,7 @@ class SunData():
 class SunDisplayer():
     def __init__(self, lat, lon):
         self.coords: Tuple[float] = (lat, lon)
-        self.font = ImageFont.truetype(f'assets/fonts/04B_03__.TTF', size=8)
+        self.font = ImageFont.truetype(Path(__file__).parent / f'assets/fonts/04B_03__.TTF', size=8)
 
         self.today: datetime = datetime.today()
         tomorrow = self.today + timedelta(days=1)
@@ -49,18 +50,18 @@ class SunDisplayer():
         if self.todayData.sunrise < self.today:
             topLabel: str = "Sunset"
             topText: str = self.todayData.sunset.strftime('%H:%M')
-            bottomLabel: str = "Sunrise"
-            bottomText: str = self.tomorrowData.sunrise.strftime('%H:%M')
+            # bottomLabel: str = "Sunrise"
+            # bottomText: str = self.tomorrowData.sunrise.strftime('%H:%M')
         else:
             topLabel: str = "Sunrise"
             topText: str = self.todayData.sunrise.strftime('%H:%M')
-            bottomLabel: str = "Sunset"
-            bottomText: str = self.todayData.sunset.strftime('%H:%M')
+            # bottomLabel: str = "Sunset"
+            # bottomText: str = self.todayData.sunset.strftime('%H:%M')
 
         draw.text((33, 1), topLabel, fill=None, font=self.font)
         draw.text((33, 8), topText, fill=None, font=self.font)
-        draw.text((33, 17), bottomLabel, fill=None, font=self.font)
-        draw.text((33, 24), bottomText, fill=None, font=self.font)
+        # draw.text((33, 17), bottomLabel, fill=None, font=self.font)
+        # draw.text((33, 24), bottomText, fill=None, font=self.font)
 
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
         day_arc = self.todayData.day_length / (24*60*60) * 360
