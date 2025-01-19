@@ -38,6 +38,8 @@ class SunDisplayer():
         
         self._drawText(draw)
         self._drawArcs(draw)
+        self._drawRainbow(draw)
+
         if self.showSun: self._drawSun(draw)
 
         return image
@@ -47,6 +49,23 @@ class SunDisplayer():
         self.todayData: SunData = getSunData(self.coords[0], self.coords[1])
         tomorrow = self.today + timedelta(days=1)
         self.tomorrowData: SunData = getSunData(self.coords[0], self.coords[1], tomorrow)
+
+    def _drawRainbow(self, draw: ImageDraw.ImageDraw):
+        rainbow_colors = [
+            "#FF0000",  # Red
+            "#FF7F00",  # Orange
+            "#FFFF00",  # Yellow
+            "#00FF00",  # Green
+            "#0000FF",  # Blue
+            "#4B0082",  # Indigo 
+            "#EE82EE"   # Violet
+        ]
+        x = 33
+        for color in rainbow_colors:
+            draw.point((x, 10), fill=color)
+            draw.point((x, 11), fill=color)
+            draw.point((x, 12), fill=color)
+            x += 3
 
     def _drawText(self, draw: ImageDraw.ImageDraw):
         if self.todayData.sunrise < self.today:
