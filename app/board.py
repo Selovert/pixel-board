@@ -49,7 +49,6 @@ class MatrixBoard():
         options.parallel = 1
         options.hardware_mapping = 'adafruit-hat-pwm'  # If you have an Adafruit HAT: 'adafruit-hat'
         options.gpio_slowdown = 3
-        options.inverse_colors = True
         # options.pwm_lsb_nanoseconds = 130
         options.limit_refresh_rate_hz = 160
         options.show_refresh_rate = 0
