@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime, timedelta
 import math
+import logging
 
 import requests
 from PIL import Image, ImageDraw, ImageFont

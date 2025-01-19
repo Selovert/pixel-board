@@ -1,37 +1,45 @@
 #!/usr/bin/env python3
 import time, datetime
-import sys, os, subprocess
+import sys
+import os
+import argparse
 import logging
 
 from PIL import Image, ImageDraw, ImageFont
 from traceback import format_exception
 
 sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/rpi-rgb-led-matrix/bindings/python")
-from rgbmatrix import RGBMatrix, RGBMatrixOptions
-# from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+
 
 from sun_times import SunDisplayer
 
 # region --- initialise logging ---
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler(stream=sys.stdout)
-logger.addHandler(handler)
-fh = logging.FileHandler(f'{os.path.dirname(os.path.realpath(__file__))}/mta-board.log')
-fh.setLevel(logging.WARNING)
-logger.addHandler(fh)
+# logger = logging.getLogger(__name__)
+# handler = logging.StreamHandler(stream=sys.stdout)
+# logger.addHandler(handler)
+# fh = logging.FileHandler(f'{os.path.dirname(os.path.realpath(__file__))}/mta-board.log')
+# fh.setLevel(logging.DEBUG)
+# logger.addHandler(fh)
 
-def handle_exception(exc_type, exc_value, exc_traceback):
-    if issubclass(exc_type, KeyboardInterrupt):
-        sys.__excepthook__(exc_type, exc_value, exc_traceback)
-        return
+# def handle_exception(exc_type, exc_value, exc_traceback):
+#     if issubclass(exc_type, KeyboardInterrupt):
+#         sys.__excepthook__(exc_type, exc_value, exc_traceback)
+#         return
 
-    logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+#     logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
 
-sys.excepthook = handle_exception
+# sys.excepthook = handle_exception
 # endregion
 
 class MatrixBoard():
-    def __init__(self, *args, **kwargs):
+    def __init__(self, debug:bool=False, emulate:bool=False, *args, **kwargs):
+        self.debug: bool = debug
+        if emulate: from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+        else: from rgbmatrix import RGBMatrix, RGBMatrixOptions
+        self.logger: logging.Logger = logging.getLogger()
+        if self.debug: self.logger.setLevel(logging.DEBUG)
+        else: self.logger.setLevel(logging.WARNING)
+
         # Configuration for the matrix
         options = RGBMatrixOptions()
         options.rows = 32
@@ -46,7 +54,7 @@ class MatrixBoard():
         options.show_refresh_rate = 0
 
         # EMLUTATOR SETTINGS
-        # options.pixel_style = 'circle'
+        if emulate: options.pixel_style = 'circle'
         
         self.dir = os.path.dirname(os.path.realpath(__file__)) # directory of this file
         # self.logo = Image.open(f'{self.dir}/assets/images/L_logo.png').convert('RGBA') # pull logo from the assets
@@ -59,8 +67,6 @@ class MatrixBoard():
 
     def run(self):
         self.startTime = datetime.datetime.now()
-        # self.font = ImageFont.truetype(f'{self.dir}/assets/fonts/04B_03__.TTF', size=8)
-        # self.timeFont = ImageFont.truetype(f'{self.dir}/assets/fonts/luminator-4x6-dotmap.ttf', size=6, )
         self.displayer = SunDisplayer(45.428097, -122.681340)
         self.lastTodayUpdate: float = 0.0
 
@@ -90,6 +96,7 @@ class MatrixBoard():
             self.i += 1 # increment the number of iterations run
             time.sleep(0.005) # the nominal fastest tick time
             self.canvas = self.matrix.SwapOnVSync(self.canvas) # pulls in the just-generated canvas on the next frame
+            logging.debug('test')
 
 
     # def showIP(self):
@@ -185,7 +192,11 @@ class MatrixBoard():
         
 
 if __name__ == "__main__":
-    board = MatrixBoard()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action="store_true", required=False)
+    parser.add_argument('-e', '--emulate', action="store_true", required=False)
+    args = parser.parse_args()
+    board = MatrixBoard(debug=args.debug, emulate=args.emulate)
     while True:
         try:
             board.run()
