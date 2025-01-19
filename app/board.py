@@ -96,7 +96,6 @@ class MatrixBoard():
             self.i += 1 # increment the number of iterations run
             time.sleep(0.005) # the nominal fastest tick time
             self.canvas = self.matrix.SwapOnVSync(self.canvas) # pulls in the just-generated canvas on the next frame
-            logging.debug('test')
 
 
     # def showIP(self):
