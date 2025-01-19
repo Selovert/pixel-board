@@ -43,24 +43,26 @@ class SunDisplayer():
         return image
 
     def reloadData(self):
+        self.today = datetime.today()
         self.todayData: SunData = getSunData(self.coords[0], self.coords[1])
         tomorrow = self.today + timedelta(days=1)
         self.tomorrowData: SunData = getSunData(self.coords[0], self.coords[1], tomorrow)
 
     def _drawText(self, draw: ImageDraw.ImageDraw):
         if self.todayData.sunrise < self.today:
-            topLabel: str = "Sunset"
-            topText: str = self.todayData.sunset.strftime('%H:%M')
+            eventLabel: str = "Sunset"
+            eventTime: str = self.todayData.sunset.strftime('%H:%M')
             # bottomLabel: str = "Sunrise"
             # bottomText: str = self.tomorrowData.sunrise.strftime('%H:%M')
         else:
-            topLabel: str = "Sunrise"
-            topText: str = self.todayData.sunrise.strftime('%H:%M')
+            eventLabel: str = "Sunrise"
+            eventTime: str = self.todayData.sunrise.strftime('%H:%M')
             # bottomLabel: str = "Sunset"
             # bottomText: str = self.todayData.sunset.strftime('%H:%M')
 
-        draw.text((33, 1), topLabel, fill=None, font=self.font)
-        draw.text((33, 8), topText, fill=None, font=self.font)
+        draw.text((33, 1), self.today.strftime('%H:%M'), fill=None, font=self.font)
+        draw.text((33, 17), eventLabel, fill=None, font=self.font)
+        draw.text((33, 24), eventTime, fill=None, font=self.font)
         # draw.text((33, 17), bottomLabel, fill=None, font=self.font)
         # draw.text((33, 24), bottomText, fill=None, font=self.font)
 
