@@ -20,6 +20,10 @@ class SunData():
     golden_hour: datetime
     day_length: int
 
+    def __post_init__(self):
+        td: timedelta = self.first_light - self.last_light
+        self.light_length: int = td.seconds
+
 class SunDisplayer():
     def __init__(self, lat, lon):
         self.coords: Tuple[float] = (lat, lon)
@@ -88,8 +92,11 @@ class SunDisplayer():
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
         day_arc = self.todayData.day_length / (24*60*60) * 360
         day_arc_offset = (180-day_arc)/2
-        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2)
+        light_arc = self.todayData.light_length  / (24*60*60) * 360
+        light_arc_offset = (180-light_arc)/2
         draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=2)
+        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#0c5d94', width=2)
+        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2)
 
     def _drawSun(self, draw: ImageDraw.ImageDraw):
         midnight = self.today.replace(hour=0, minute=0, second=0, microsecond=0)
