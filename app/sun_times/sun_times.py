@@ -21,7 +21,7 @@ class SunData():
     day_length: int
 
     def __post_init__(self):
-        td: timedelta = self.first_light - self.last_light
+        td: timedelta = self.dusk - self.dawn
         self.light_length: int = td.seconds
 
 class SunDisplayer():
@@ -75,11 +75,11 @@ class SunDisplayer():
         if self.todayData.sunrise < self.today:
             topLabel: str = "Sunset"
             topTime: str = self.todayData.sunset.strftime('%H:%M')
-            bottomLabel: str = "Dark"
-            bottomText: str = self.tomorrowData.last_light.strftime('%H:%M')
+            bottomLabel: str = "Dusk"
+            bottomText: str = self.todayData.dusk.strftime('%H:%M')
         else:
-            topLabel: str = "Light"
-            topTime: str = self.todayData.first_light.strftime('%H:%M')
+            topLabel: str = "Dawn"
+            topTime: str = self.todayData.dawn.strftime('%H:%M')
             bottomLabel: str = "Sunrise"
             bottomText: str = self.todayData.sunrise.strftime('%H:%M')
 
@@ -90,19 +90,21 @@ class SunDisplayer():
         draw.text((33, 24), bottomText, fill=None, font=self.font)
 
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
+        arc_w: int = 2
         day_arc = self.todayData.day_length / (24*60*60) * 360
         day_arc_offset = (180-day_arc)/2
         light_arc = self.todayData.light_length  / (24*60*60) * 360
         light_arc_offset = (180-light_arc)/2
-        draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=2) # night arc
-        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#07446e', width=2) # light arc
-        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=2) # day arc
+        draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=arc_w) # night arc
+        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#07446e', width=arc_w) # light arc
+        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=arc_w) # day arc
 
     def _drawSun(self, draw: ImageDraw.ImageDraw):
         midnight = self.today.replace(hour=0, minute=0, second=0, microsecond=0)
         sun_theta = (self.today - midnight).seconds / (24*60*60) * 2*math.pi
-        sun_x = int(16 - 14*math.sin(sun_theta))
-        sun_y = int(16 + 14*math.cos(sun_theta))
+        sun_r: float = 14
+        sun_x = int(16 - sun_r*math.sin(sun_theta))
+        sun_y = int(16 + sun_r*math.cos(sun_theta))
 
         draw.point((sun_x,sun_y), fill='#ffe921')
         draw.point((sun_x+1,sun_y), fill=(255, 233, 33, 70))
@@ -113,6 +115,7 @@ class SunDisplayer():
 
 def getSunData(lat:float, lon:float, date:datetime=datetime.today()) -> SunData:
     url: str = f"https://api.sunrisesunset.io/json?lat={lat:0.6f}&lng={lon:0.6f}&date={date.strftime('%Y-%m-%d')}"
+    logging.debug(url)
     r = requests.get(url)
     if r.status_code != 200: return None
     if r.headers['content-type'] != "application/json": return None
