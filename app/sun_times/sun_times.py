@@ -66,28 +66,28 @@ class SunDisplayer():
         ]
         x = 33
         for color in rainbow_colors:
-            draw.point((x, 10), fill=color)
-            draw.point((x, 11), fill=color)
-            draw.point((x, 12), fill=color)
-            x += 3
+            draw.point((x, 15), fill=color)
+            draw.point((x, 16), fill=color)
+            # draw.point((x, 12), fill=color)
+            x += 4
 
     def _drawText(self, draw: ImageDraw.ImageDraw):
         if self.todayData.sunrise < self.today:
-            eventLabel: str = "Sunset"
-            eventTime: str = self.todayData.sunset.strftime('%H:%M')
-            # bottomLabel: str = "Sunrise"
-            # bottomText: str = self.tomorrowData.sunrise.strftime('%H:%M')
+            topLabel: str = "Sunset"
+            topTime: str = self.todayData.sunset.strftime('%H:%M')
+            bottomLabel: str = "Dark"
+            bottomText: str = self.tomorrowData.last_light.strftime('%H:%M')
         else:
-            eventLabel: str = "Sunrise"
-            eventTime: str = self.todayData.sunrise.strftime('%H:%M')
-            # bottomLabel: str = "Sunset"
-            # bottomText: str = self.todayData.sunset.strftime('%H:%M')
+            topLabel: str = "Light"
+            topTime: str = self.todayData.first_light.strftime('%H:%M')
+            bottomLabel: str = "Sunrise"
+            bottomText: str = self.todayData.sunrise.strftime('%H:%M')
 
-        draw.text((33, 1), self.today.strftime('%H:%M'), fill=None, font=self.font)
-        draw.text((33, 17), eventLabel, fill=None, font=self.font)
-        draw.text((33, 24), eventTime, fill=None, font=self.font)
-        # draw.text((33, 17), bottomLabel, fill=None, font=self.font)
-        # draw.text((33, 24), bottomText, fill=None, font=self.font)
+        draw.text((7, 13), self.today.strftime('%H:%M'), fill=None, font=self.font)
+        draw.text((33, 1), topLabel, fill=None, font=self.font)
+        draw.text((33, 8), topTime, fill=None, font=self.font)
+        draw.text((33, 17), bottomLabel, fill=None, font=self.font)
+        draw.text((33, 24), bottomText, fill=None, font=self.font)
 
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
         day_arc = self.todayData.day_length / (24*60*60) * 360
