@@ -72,11 +72,20 @@ class SunDisplayer():
             x += 4
 
     def _drawText(self, draw: ImageDraw.ImageDraw):
-        if self.todayData.sunrise < self.today:
+        # -- pick the correct day to pull data from
+        # - if it's after today's sunrise and before today's dusk
+        if self.todayData.sunrise < self.today and self.todayData.dusk > self.today:
             topLabel: str = "Sunset"
             topTime: str = self.todayData.sunset.strftime('%H:%M')
             bottomLabel: str = "Dusk"
             bottomText: str = self.todayData.dusk.strftime('%H:%M')
+        # - if it's after today's sunrise and after today's dusk
+        elif self.todayData.sunrise < self.today and self.todayData.dusk < self.today:
+            topLabel: str = "Dawn"
+            topTime: str = self.tomorrowData.dawn.strftime('%H:%M')
+            bottomLabel: str = "Sunrise"
+            bottomText: str = self.tomorrowData.sunrise.strftime('%H:%M')
+        # - if it's before today's sunrise and before today's dusk
         else:
             topLabel: str = "Dawn"
             topTime: str = self.todayData.dawn.strftime('%H:%M')
