@@ -4,10 +4,8 @@ sudo apt-get update && sudo apt-get install -y build-essential python3-dev cytho
 # -- install PDM --
 curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 export PATH=/dietpi/.local/bin:$PATH
-# -- clone the repo and cd in --
-git clone --recurse-submodules https://github.com/Selovert/pixel-board
-cd pixel-board
 # -- install python dependencies --
+cd /usr/local/pixel-board
 sudo pdm install
 pdm export -o requirements.txt --without-hashes
 sudo pip install -r requirements.txt --break-system-packages
