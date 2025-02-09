@@ -67,25 +67,22 @@ class MatrixBoard():
         self.i = 0 # number of updates that have been ticked
 
     def run(self):
-        self.startTime = datetime.datetime.now()
         self.displayer = SunDisplayer(34.110856, -118.272459)
-        self.lastTodayUpdate: float = 0.0
+        self.lastTodayUpdate: float = time.time()
 
         self.canvas = self.matrix.CreateFrameCanvas()
 
         self.running = True # start things up
         while self.running:
-            runTime:datetime.timedelta = datetime.datetime.now() - self.startTime # get runtime as timedelta
-            self.runTime:float = runTime.seconds + runTime.microseconds * 10.0**-6 # convert runtime to sec
             self.image = Image.new('RGBA', (self.matrix.width, self.matrix.height)) # new PIL image to build on
             # -- reload current time every 10 seconds --
-            if self.runTime - self.lastTodayUpdate > 10:
+            if time.time() - self.lastTodayUpdate > 10:
                 self.displayer.today = datetime.datetime.today()
-                self.lastTodayUpdate = self.runTime
+                self.lastTodayUpdate = time.time()
             # -- reload sunData when the day changes --
             if self.displayer.todayData.date.day != self.displayer.today.day:
                 self.displayer.reloadData()
-            self.displayer.showSun = False if int(self.runTime*1.5) % 2 == 0 else True
+            self.displayer.showSun = False if int(time.time()*1.5) % 2 == 0 else True
 
             sunImage = self.displayer.generateImage()
             self.image.paste(sunImage, (0,0))
