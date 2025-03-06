@@ -10,12 +10,10 @@
     - `AUTO_SETUP_DHCP_TO_STATIC`: `1`
     - `AUTO_SETUP_NET_HOSTNAME`: `PixelBoard`
     - `AUTO_SETUP_HEADLESS`: `1`
-    - `AUTO_SETUP_CUSTOM_SCRIPT_EXEC`: `https://raw.githubusercontent.com/Selovert/pixel-board/refs/heads/main/Automation_Custom_Script.md`
+    - `AUTO_SETUP_CUSTOM_SCRIPT_EXEC`: `https://raw.githubusercontent.com/Selovert/pixel-board/refs/heads/main/Automation_Custom_Script.sh`
     - `AUTO_SETUP_SSH_PUBKEY`: whatever your public key is
     - `AUTO_SETUP_AUTOSTART_TARGET_INDEX`: `17`
     - `AUTO_SETUP_AUTOMATED`: `1`
-
-2. Put install.sh in the path `/boot/Automation_Custom_Script.sh`
 2. Open the file `dietpi-wifi.txt` and set `aWIFI_SSID[0]` to the name of your WiFi network.
 3. In the same file `dietpi-wifi.txt`, set `aWIFI_KEY[0]` to the password of your WiFi network.
 
