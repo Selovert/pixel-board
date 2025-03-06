@@ -25,6 +25,7 @@ sudo apt-get update && sudo apt-get install -y git
 (cd /usr/local/pixel-board && ./install.sh)
 ```
 
+# Add the board to autostart
 dietpi-config -> 9: AutoStart Options -> 14: Custom Script (background, no autologin)
 ```
 #!/bin/bash
@@ -33,4 +34,9 @@ dietpi-config -> 9: AutoStart Options -> 14: Custom Script (background, no autol
 /usr/local/pixel-board/app/board.py
 
 exit 0
+```
+
+# Reboot
+```
+sudo reboot
 ```
