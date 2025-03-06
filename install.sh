@@ -7,7 +7,6 @@ echo "------ Installing PDM ------"
 curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 export PATH=~/.local/bin:$PATH
 echo "------ Building PDM lock ------"
-mkdir /usr/local/pixel-board
 cd /usr/local/pixel-board
 pdm install
 echo "------ Installing python packages ------"
@@ -19,7 +18,8 @@ echo "------ Build rpi matrix python bindings ------"
 echo "------ Add nightly restart to crontab ------"
 (sudo crontab -l 2>/dev/null; echo "30 2   *   *   *    /sbin/shutdown -r +5") | sudo crontab -
 
-
+mkdir /var/lib/dietpi/dietpi-autostart/
+touch /var/lib/dietpi/dietpi-autostart/custom.sh
 cat > /var/lib/dietpi/dietpi-autostart/custom.sh << EOF
 #!/bin/bash
 # DietPi-AutoStart custom script
