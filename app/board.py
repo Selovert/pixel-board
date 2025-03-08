@@ -56,15 +56,13 @@ class MatrixBoard():
 
         # EMLUTATOR SETTINGS
         if emulate: options.pixel_style = 'circle'
-        
+
         self.dir = os.path.dirname(os.path.realpath(__file__)) # directory of this file
         # self.logo = Image.open(f'{self.dir}/assets/images/L_logo.png').convert('RGBA') # pull logo from the assets
 
         self.matrix = RGBMatrix(options = options) # init the matrix with its options
-        
+
         self.running = False # start as not running
-        self.runTime = 0
-        self.i = 0 # number of updates that have been ticked
 
     def run(self):
         self.displayer = SunDisplayer(34.110856, -118.272459)
@@ -91,7 +89,6 @@ class MatrixBoard():
             self.canvas.Clear() # clear whatever's on the screen
             self.canvas.SetImage(self.image.convert('RGB'), 0, 0) # transfer the PIL image to the canvas
 
-            self.i += 1 # increment the number of iterations run
             time.sleep(0.005) # the nominal fastest tick time
             self.canvas = self.matrix.SwapOnVSync(self.canvas) # pulls in the just-generated canvas on the next frame
 
@@ -130,7 +127,7 @@ class MatrixBoard():
 #                  type:str='static',
 #                  i:int=0,
 #                  ):
-        
+
 #         self.text = str(text)
 #         self.font = font
 #         self.type = type
@@ -169,7 +166,7 @@ class MatrixBoard():
 #     def showScrollingText(self):
 #         spacing = int(self.textHeight * 2) # this is a nice amount of spacing. I'm hardcoding it!
 #         scrollWidth = self.textWidth + spacing # width of the scrolling element with its spacing
-        
+
 #         if self.textWidth < self.width: # if there's no point in scrolling because the whole text fits
 #             self.showStaticText() # just show the text
 #             return None
@@ -183,10 +180,10 @@ class MatrixBoard():
 #             if posAdjustment <= scrollWidth: # only shift the text for one unit of scrolling
 #                 pos += posAdjustment # shift text to the right
 #             self.outputDraw.text((pos, self.y), self.text, fill=self.fill, font=self.font)
-    
+
 #     def addToImage(self, imgObj:ImageDraw.ImageDraw, pos:tuple[int, int]):
 #         imgObj.paste(im=self.outputImage, box=pos) # plop the textbox image into the parent image at the given position
-        
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
