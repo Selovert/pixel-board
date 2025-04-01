@@ -1,5 +1,6 @@
 dev
 emulator_config.json
+*_secrets.txt
 
 # -- DEFAULT PYTHON GITIGNORE --
 # Byte-compiled / optimized / DLL files
