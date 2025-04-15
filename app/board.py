@@ -9,8 +9,6 @@ from PIL import Image, ImageDraw, ImageFont
 from traceback import format_exception
 
 sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/rpi-rgb-led-matrix/bindings/python")
-
-
 from sun_times import SunDisplayer
 
 # region --- initialise logging ---
@@ -54,15 +52,13 @@ class MatrixBoard():
         options.limit_refresh_rate_hz = 160
         options.show_refresh_rate = 0
 
-        # EMLUTATOR SETTINGS
-        if emulate: options.pixel_style = 'circle'
-
         self.dir = os.path.dirname(os.path.realpath(__file__)) # directory of this file
         # self.logo = Image.open(f'{self.dir}/assets/images/L_logo.png').convert('RGBA') # pull logo from the assets
 
         self.matrix = RGBMatrix(options = options) # init the matrix with its options
 
         self.running = False # start as not running
+        self.startTime: float = 0
 
     def run(self):
         self.displayer = SunDisplayer(34.110856, -118.272459)
@@ -71,6 +67,8 @@ class MatrixBoard():
         self.canvas = self.matrix.CreateFrameCanvas()
 
         self.running = True # start things up
+        self.startTime = time.time()
+
         while self.running:
             self.image = Image.new('RGBA', (self.matrix.width, self.matrix.height)) # new PIL image to build on
             # -- reload current time every 10 seconds --
@@ -92,6 +90,7 @@ class MatrixBoard():
             time.sleep(0.005) # the nominal fastest tick time
             self.canvas = self.matrix.SwapOnVSync(self.canvas) # pulls in the just-generated canvas on the next frame
 
+            if time.time() - self.startTime > 3600: self.running = False # self-destruct hour
 
     # def showIP(self):
     #     """
@@ -190,10 +189,15 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--debug', action="store_true", required=False)
     parser.add_argument('-e', '--emulate', action="store_true", required=False)
     args = parser.parse_args()
-    board = MatrixBoard(debug=args.debug, emulate=args.emulate)
+
     while True:
         try:
+            board = MatrixBoard(debug=args.debug, emulate=args.emulate)
             board.run()
+            del board
         except Exception as ex:
-            logging.error(''.join(format_exception(None, ex, ex.__traceback__)))
-            continue
+            if args.debug:
+                raise ex
+            else:
+                logging.error(''.join(format_exception(None, ex, ex.__traceback__)))
+                continue
