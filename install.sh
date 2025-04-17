@@ -24,5 +24,5 @@ cat > /var/lib/dietpi/dietpi-autostart/custom.sh << EOF
 #!/bin/bash
 # DietPi-AutoStart custom script
 # Location: /var/lib/dietpi/dietpi-autostart/custom.sh
-/usr/local/pixel-board/app/board.py
+/usr/local/pixel-board/run.sh
 EOF

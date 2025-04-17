@@ -190,14 +190,12 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--emulate', action="store_true", required=False)
     args = parser.parse_args()
 
-    while True:
-        try:
-            board = MatrixBoard(debug=args.debug, emulate=args.emulate)
-            board.run()
-            del board
-        except Exception as ex:
-            if args.debug:
-                raise ex
-            else:
-                logging.error(''.join(format_exception(None, ex, ex.__traceback__)))
-                continue
+    try:
+        board = MatrixBoard(debug=args.debug, emulate=args.emulate)
+        board.run()
+        del board
+    except Exception as ex:
+        if args.debug:
+            raise ex
+        else:
+            logging.error(''.join(format_exception(None, ex, ex.__traceback__)))
