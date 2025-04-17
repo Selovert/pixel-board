@@ -16,7 +16,7 @@ echo "------ Build rpi matrix python bindings ------"
 (cd app/rpi-rgb-led-matrix/ && sudo make build-python)
 (cd app/rpi-rgb-led-matrix/ && sudo make install-python)
 echo "------ Add nightly restart to crontab ------"
-(sudo crontab -l 2>/dev/null; echo "30 2   *   *   *    reboot") | sudo crontab -
+# (sudo crontab -l 2>/dev/null; echo "30 2   *   *   *    reboot") | sudo crontab -
 
 mkdir /var/lib/dietpi/dietpi-autostart/
 touch /var/lib/dietpi/dietpi-autostart/custom.sh
