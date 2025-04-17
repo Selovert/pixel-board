@@ -10,7 +10,7 @@ echo "------ Building PDM lock ------"
 cd /usr/local/pixel-board
 pdm install
 echo "------ Installing python packages ------"
-pdm export -o requirements.txt --without-hashes
+pdm export -o requirements.txt --prod --without-hashes
 sudo pip install -r requirements.txt --break-system-packages
 echo "------ Build rpi matrix python bindings ------"
 (cd app/rpi-rgb-led-matrix/ && sudo make build-python)
