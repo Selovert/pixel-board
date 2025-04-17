@@ -8,7 +8,7 @@ curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 export PATH=~/.local/bin:$PATH
 echo "------ Building PDM lock ------"
 cd /usr/local/pixel-board
-pdm install
+pdm install --prod
 echo "------ Installing python packages ------"
 pdm export -o requirements.txt --prod --without-hashes
 sudo pip install -r requirements.txt --break-system-packages
