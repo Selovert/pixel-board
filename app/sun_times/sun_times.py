@@ -100,13 +100,10 @@ class SunDisplayer():
 
     def _drawArcs(self, draw: ImageDraw.ImageDraw):
         arc_w: int = 2
-        day_arc = self.todayData.day_length / (24*60*60) * 360
-        day_arc_offset = (180-day_arc)/2
-        light_arc = self.todayData.light_length  / (24*60*60) * 360
-        light_arc_offset = (180-light_arc)/2
-        draw.arc(((1,1),(30,30)), -day_arc_offset, day_arc_offset-180, fill='#7a7a7a', width=arc_w) # night arc
-        draw.arc(((1,1),(30,30)), light_arc_offset-180, -light_arc_offset, fill='#07446e', width=arc_w) # light arc
-        draw.arc(((1,1),(30,30)), day_arc_offset-180, -day_arc_offset, fill='#87cfff', width=arc_w) # day arc
+        arc_point: Callable[[datetime], float] = lambda dt: (dt.hour + dt.minute/60) / 24 * 360 + 90
+        draw.arc(((1,1),(30,30)), arc_point(self.todayData.sunset), arc_point(self.todayData.sunrise), fill='#7a7a7a', width=arc_w) # night arc
+        draw.arc(((1,1),(30,30)), arc_point(self.todayData.dawn), arc_point(self.todayData.dusk), fill='#07446e', width=arc_w) # light arc
+        draw.arc(((1,1),(30,30)), arc_point(self.todayData.sunrise), arc_point(self.todayData.sunset), fill='#87cfff', width=arc_w) # day arc
 
     def _drawSun(self, draw: ImageDraw.ImageDraw):
         midnight = self.today.replace(hour=0, minute=0, second=0, microsecond=0)
