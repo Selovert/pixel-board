@@ -25,13 +25,13 @@ class SunData():
         self.light_length: int = td.seconds
 
 class SunDisplayer():
-    def __init__(self, lat, lon):
+    def __init__(self, lat, lon, now:datetime=datetime.today()):
         self.coords: Tuple[float] = (lat, lon)
         self.font = ImageFont.truetype(Path(__file__).parent / f'assets/fonts/04B_03__.TTF', size=8)
 
-        self.today: datetime = datetime.today()
+        self.today: datetime = now
         tomorrow = self.today + timedelta(days=1)
-        self.todayData: SunData = getSunData(self.coords[0], self.coords[1])
+        self.todayData: SunData = getSunData(self.coords[0], self.coords[1], self.today)
         self.tomorrowData: SunData = getSunData(self.coords[0], self.coords[1], tomorrow)
 
         self.showSun: bool = True
@@ -39,7 +39,7 @@ class SunDisplayer():
     def generateImage(self) -> Image.Image:
         image: Image.Image = Image.new('RGBA', (64, 32)) # new PIL image to build on
         draw: ImageDraw.ImageDraw = ImageDraw.Draw(image) # draw object to use for adding text
-        
+
         self._drawText(draw)
         self._drawArcs(draw)
         self._drawRainbow(draw)
@@ -50,7 +50,7 @@ class SunDisplayer():
 
     def reloadData(self):
         self.today = datetime.today()
-        self.todayData: SunData = getSunData(self.coords[0], self.coords[1])
+        self.todayData: SunData = getSunData(self.coords[0], self.coords[1], self.today)
         tomorrow = self.today + timedelta(days=1)
         self.tomorrowData: SunData = getSunData(self.coords[0], self.coords[1], tomorrow)
 
@@ -61,7 +61,7 @@ class SunDisplayer():
             "#FFFF00",  # Yellow
             "#00FF00",  # Green
             "#0000FF",  # Blue
-            "#4B0082",  # Indigo 
+            "#4B0082",  # Indigo
             "#EE82EE"   # Violet
         ]
         x = 33
