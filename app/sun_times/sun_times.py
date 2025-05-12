@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Callable
 from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime, timedelta
