@@ -2,15 +2,15 @@
 
 echo "------ Installing dependencies ------"
 sudo apt-get update && sudo apt-get install -y build-essential python3-dev cython3 python3 python3.11-venv python3-pip
-# -- install PDM --
-echo "------ Installing PDM ------"
-curl -sSL https://pdm-project.org/install-pdm.py | python3 -
+# -- install uv --
+echo "------ Installing uv ------"
+curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH=~/.local/bin:$PATH
-echo "------ Building PDM lock ------"
+echo "------ installing venv ------"
 cd /usr/local/pixel-board
-pdm install --prod
+uv lock --no-dev
 echo "------ Installing python packages ------"
-pdm export -o requirements.txt --prod --without-hashes
+uv export --no-dev --no-hashes > requirements.txt
 sudo pip install -r requirements.txt --break-system-packages
 echo "------ Build rpi matrix python bindings ------"
 (cd app/rpi-rgb-led-matrix/ && sudo make build-python)
