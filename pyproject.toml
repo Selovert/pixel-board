@@ -6,7 +6,7 @@ authors = [
     {name = "Tassilo Selover-Stephan", email = "tassilo@selover.net"},
 ]
 dependencies = ["pillow>=11.0.0", "requests>=2.32.3"]
-requires-python = "==3.11.*"
+requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
 
