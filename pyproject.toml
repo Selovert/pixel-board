@@ -6,7 +6,7 @@ authors = [
     {name = "Tassilo Selover-Stephan", email = "tassilo@selover.net"},
 ]
 dependencies = [
-    "pillow>=11.0.0",
+    "pillow>=11.0.0,<12",
     "requests>=2.32.3",
     "setuptools>=80.9.0",
 ]
