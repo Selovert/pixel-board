@@ -5,7 +5,11 @@ description = "Default template for PDM package"
 authors = [
     {name = "Tassilo Selover-Stephan", email = "tassilo@selover.net"},
 ]
-dependencies = ["pillow>=11.0.0", "requests>=2.32.3"]
+dependencies = [
+    "pillow>=11.0.0",
+    "requests>=2.32.3",
+    "setuptools>=80.9.0",
+]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
