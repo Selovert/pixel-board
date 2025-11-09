@@ -1,7 +1,7 @@
 dev
 emulator_config.json
 *_secrets.txt
-pdm.lock
+uv.lock
 requirements.txt
 
 # -- DEFAULT PYTHON GITIGNORE --
