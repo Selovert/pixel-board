@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "------ Installing system dependencies ------"
 sudo apt-get update && sudo apt-get install -y build-essential python-dev-is-python3 python3-dev cmake python3 python3-pil cython3
