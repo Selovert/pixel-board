@@ -22,6 +22,9 @@ if ! grep -q 'isolcpus=3' "$CMDLINE"; then
   sed -i 's/$/ isolcpus=3/' "$CMDLINE"
 fi
 
+echo "------ Configuring nightly reboot at 3am ------"
+echo "0 3 * * * root /sbin/reboot" > /etc/cron.d/pixel-board-reboot
+
 echo "------ Configuring autostart ------"
 mkdir -p /var/lib/dietpi/dietpi-autostart/
 cat > /var/lib/dietpi/dietpi-autostart/custom.sh << EOF
