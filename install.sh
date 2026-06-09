@@ -15,6 +15,10 @@ uv sync
 echo "------ Building and installing rgbmatrix Python bindings ------"
 uv pip install ./app/rpi-rgb-led-matrix/
 
+echo "------ Building display binary ------"
+cmake -B /usr/local/pixel-board/app/build /usr/local/pixel-board/app
+cmake --build /usr/local/pixel-board/app/build --target display
+
 echo "------ Configuring isolcpus=3 for LED matrix ------"
 CMDLINE=/boot/firmware/cmdline.txt
 if ! grep -q 'isolcpus=3' "$CMDLINE"; then
