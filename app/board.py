@@ -8,7 +8,6 @@ import logging
 from PIL import Image, ImageDraw, ImageFont
 from traceback import format_exception
 
-sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/rpi-rgb-led-matrix/bindings/python")
 from sun_times import SunDisplayer
 
 # region --- initialise logging ---
