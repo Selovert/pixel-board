@@ -3,6 +3,7 @@ emulator_config.json
 *_secrets.txt
 pdm.lock
 requirements.txt
+.ds_Store
 
 # -- DEFAULT PYTHON GITIGNORE --
 # Byte-compiled / optimized / DLL files
