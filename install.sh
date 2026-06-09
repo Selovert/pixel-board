@@ -15,6 +15,12 @@ uv sync
 echo "------ Building and installing rgbmatrix Python bindings ------"
 uv pip install ./app/rpi-rgb-led-matrix/
 
+echo "------ Configuring isolcpus=3 for LED matrix ------"
+CMDLINE=/boot/firmware/cmdline.txt
+if ! grep -q 'isolcpus=3' "$CMDLINE"; then
+  sed -i 's/$/ isolcpus=3/' "$CMDLINE"
+fi
+
 echo "------ Configuring autostart ------"
 mkdir -p /var/lib/dietpi/dietpi-autostart/
 cat > /var/lib/dietpi/dietpi-autostart/custom.sh << EOF
