@@ -10,6 +10,9 @@ requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 
+[tool.uv]
+python-preference = "only-system"
+
 [dependency-groups]
 dev = [
     "RGBMatrixEmulator>=0.11.6",
