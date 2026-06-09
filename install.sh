@@ -2,7 +2,7 @@
 set -e
 
 echo "------ Installing system dependencies ------"
-sudo apt-get update && sudo apt-get install -y build-essential python-dev-is-python3 python3-dev cmake python3 python3-pil cython3
+sudo apt-get update && sudo apt-get install -y build-essential cmake python3
 
 echo "------ Installing uv ------"
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -11,9 +11,6 @@ export PATH=~/.local/bin:$PATH
 echo "------ Installing Python packages ------"
 cd /usr/local/pixel-board
 uv sync
-
-echo "------ Building and installing rgbmatrix Python bindings ------"
-uv pip install ./app/rpi-rgb-led-matrix/
 
 echo "------ Building display binary ------"
 cmake -B /usr/local/pixel-board/app/build /usr/local/pixel-board/app
