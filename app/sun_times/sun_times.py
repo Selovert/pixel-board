@@ -95,7 +95,11 @@ class SunDisplayer:
             bottomLabel: str = "Sunrise"
             bottomText: str = self.todayData.sunrise.strftime("%H:%M")
 
-        draw.text((6, 13), self.today.strftime("%H:%M"), fill=None, font=self.font)
+        time_str = self.today.strftime("%H:%M")
+        bbox = draw.textbbox((0, 0), time_str, font=self.font)
+        x = (32 - (bbox[2] - bbox[0])) // 2 - bbox[0]
+        y = (32 - (bbox[3] - bbox[1])) // 2 - bbox[1] + 1
+        draw.text((x, y), time_str, fill=None, font=self.font)
         draw.text((33, 1), topLabel, fill=None, font=self.font)
         draw.text((33, 8), topTime, fill=None, font=self.font)
         draw.text((33, 17), bottomLabel, fill=None, font=self.font)
