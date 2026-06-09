@@ -16,7 +16,7 @@ static bool read_frame(uint8_t* buf, size_t n) {
 }
 
 int main() {
-    RGBMatrixOptions options;
+    RGBMatrix::Options options;
     options.rows = 32;
     options.cols = 64;
     options.brightness = 60;
